@@ -37,8 +37,7 @@ and production potential.
 
 The practicals contain:
 - Jupyter notebooks (`.ipynb`)
-- Antimony models (`.ant`)
-- SBML files (`.sbml`)
+- Network interaction file (`.sif`)
 - BioNetGen models (`.bngl`)
 
 
