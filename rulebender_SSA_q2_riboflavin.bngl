@@ -1,0 +1,80 @@
+# Riboflavin pathway - Q2 (SSA)  Reactions 1-5
+
+
+begin parameters
+  c1   1.66e-3
+  c1r  1e-4
+  c2   0.1
+end parameters
+
+
+begin molecule types
+  R5P(a)
+  RibA(a)
+
+  D2B4P(h)
+  RibH(h)
+
+  D8RL(e)
+  RibE(e)
+
+  Riboflavin(b)   
+  RibC(c)        
+
+  FMN(b)         
+  FAD()
+end molecule types
+
+
+begin seed species
+  R5P(a)          301
+  RibA(a)         120
+  D2B4P(h)        301
+  RibH(h)         120
+  D8RL(e)         301
+  RibE(e)         120
+  Riboflavin(b)   0
+
+  RibC(c)         120
+  FMN(b)          0
+  FAD()           0
+end seed species
+
+
+begin reaction rules
+  # 1
+  R5P(a) + RibA(a) <-> R5P(a!1).RibA(a!1)               c1, c1r
+  R5P(a!1).RibA(a!1) -> D2B4P(h) + RibA(a)              c2
+
+  # 2
+  D2B4P(h) + RibH(h) <-> D2B4P(h!1).RibH(h!1)           c1, c1r
+  D2B4P(h!1).RibH(h!1) -> D8RL(e) + RibH(h)             c2
+
+  # 3
+  D8RL(e) + RibE(e) <-> D8RL(e!1).RibE(e!1)             c1, c1r
+  D8RL(e!1).RibE(e!1) -> Riboflavin(b) + RibE(e)        c2
+
+  # 4 (FIXED: real complex with a bond)
+  Riboflavin(b) + RibC(c) <-> Riboflavin(b!1).RibC(c!1) c1, c1r
+  Riboflavin(b!1).RibC(c!1) -> FMN(b) + RibC(c)         c2
+
+  # 5 (FIXED: real complex with a bond)
+  FMN(b) + RibC(c) <-> FMN(b!1).RibC(c!1)               c1, c1r
+  FMN(b!1).RibC(c!1) -> FAD() + RibC(c)                 c2
+end reaction rules
+
+
+begin observables
+ 
+  Species  Riboflavin_free   Riboflavin(b)
+  Species  FMN_free          FMN(b)
+  Species  FAD_total         FAD()
+
+  Species  Cplx_Ribo_RibC    Riboflavin(b!1).RibC(c!1)
+  Species  Cplx_FMN_RibC     FMN(b!1).RibC(c!1)
+end observables
+
+
+
+generate_network({overwrite=>1})
+simulate_ssa({t_end=>100, n_steps=>1000})
