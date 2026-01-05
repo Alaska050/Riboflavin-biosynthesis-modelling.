@@ -1,0 +1,70 @@
+# Riboflavin pathway - Q1 (SSA)  Reactions 1-3
+
+
+begin parameters
+  c1   1.66e-3
+  c1r  1e-4
+  c2   0.1
+end parameters
+
+
+begin molecule types
+  R5P(a)
+  RibA(a)
+
+  D2B4P(h)
+  RibH(h)
+
+  D8RL(e)
+  RibE(e)
+
+  Riboflavin()
+end molecule types
+
+
+begin seed species
+  R5P(a)        301
+  RibA(a)       120
+
+  D2B4P(h)      301
+  RibH(h)       120
+
+  D8RL(e)       301
+  RibE(e)       120
+
+  Riboflavin()  0
+end seed species
+
+
+begin reaction rules
+  # Module 1
+  R5P(a) + RibA(a) <-> R5P(a!1).RibA(a!1)          c1, c1r
+  R5P(a!1).RibA(a!1) -> D2B4P(h) + RibA(a)         c2
+
+  # Module 2
+  D2B4P(h) + RibH(h) <-> D2B4P(h!1).RibH(h!1)      c1, c1r
+  D2B4P(h!1).RibH(h!1) -> D8RL(e) + RibH(h)        c2
+
+  # Module 3
+  D8RL(e) + RibE(e) <-> D8RL(e!1).RibE(e!1)        c1, c1r
+  D8RL(e!1).RibE(e!1) -> Riboflavin() + RibE(e)    c2
+end reaction rules
+
+
+begin observables
+  # Main species to plot 
+  Species  R5P_free        R5P(a)
+  Species  D2B4P_free      D2B4P(h)
+  Species  D8RL_free       D8RL(e)
+  Species  Riboflavin      Riboflavin()
+
+  # Complexes 
+  Species  Cplx_R5P_RibA   R5P(a!1).RibA(a!1)
+  Species  Cplx_D2B4P_RibH D2B4P(h!1).RibH(h!1)
+  Species  Cplx_D8RL_RibE  D8RL(e!1).RibE(e!1)
+end observables
+
+
+
+generate_network({overwrite=>1})
+simulate_ssa({t_end=>100, n_steps=>1000})
