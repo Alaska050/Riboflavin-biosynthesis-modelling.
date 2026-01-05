@@ -54,11 +54,11 @@ begin reaction rules
   D8RL(e) + RibE(e) <-> D8RL(e!1).RibE(e!1)             c1, c1r
   D8RL(e!1).RibE(e!1) -> Riboflavin(b) + RibE(e)        c2
 
-  # 4 (FIXED: real complex with a bond)
+  # 4 
   Riboflavin(b) + RibC(c) <-> Riboflavin(b!1).RibC(c!1) c1, c1r
   Riboflavin(b!1).RibC(c!1) -> FMN(b) + RibC(c)         c2
 
-  # 5 (FIXED: real complex with a bond)
+  # 5 
   FMN(b) + RibC(c) <-> FMN(b!1).RibC(c!1)               c1, c1r
   FMN(b!1).RibC(c!1) -> FAD() + RibC(c)                 c2
 end reaction rules
