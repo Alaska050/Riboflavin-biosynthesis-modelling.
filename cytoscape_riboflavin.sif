@@ -1,0 +1,5 @@
+ribA interacts ribB
+ribB interacts ribD
+ribD interacts ribG
+ribG interacts ribH
+ribH interacts ribE
